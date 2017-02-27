@@ -3,7 +3,8 @@ package br.com.caelum.livraria.dao;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import br.com.caelum.livraria.modelo.Livro;
 
@@ -11,15 +12,15 @@ import br.com.caelum.livraria.modelo.Livro;
 @Stateless
 public class LivroDao {
 
-	@Inject
-	private Banco banco;
+	@PersistenceContext
+	private EntityManager em;
 	
 	public void salva(Livro livro) {
-		banco.save(livro);
+		em.persist(livro);
 	}
 	
 	public List<Livro> todosLivros() {
-		return banco.listaLivros();
+		return em.createQuery("select l from Livro l", Livro.class).getResultList();
 	}
 	
 }
