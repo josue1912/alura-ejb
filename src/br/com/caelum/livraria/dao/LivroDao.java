@@ -22,5 +22,11 @@ public class LivroDao {
 	public List<Livro> todosLivros() {
 		return em.createQuery("select l from Livro l", Livro.class).getResultList();
 	}
+
+	public List<Livro> livrosPeloTitulo(String nome) {
+		return em.createQuery("select l from Livro l where titulo like :pTitulo", Livro.class)
+				.setParameter("pTitulo", "%"+nome+"%")
+				.getResultList();
+	}
 	
 }
